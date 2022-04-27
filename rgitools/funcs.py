@@ -385,7 +385,7 @@ def _feature(ind, rowobj):
 
 
 @io_logger
-def hypsometries(rgi_df, to_file='', job_id='', oggm_working_dir='',
+def hypsometries(rgi_df, to_file='', job_id='', oggm_working_dir='', source=None,
                  set_oggm_params=None):
     """
     Create hypsometries for glacier geometries using the best available DEM.
@@ -440,7 +440,7 @@ def hypsometries(rgi_df, to_file='', job_id='', oggm_working_dir='',
     cfg.PARAMS['continue_on_error'] = True
     cfg.PARAMS['use_multiprocessing'] = False
     gdirs = workflow.init_glacier_directories(rgi_df)
-    workflow.execute_entity_task(tasks.define_glacier_region, gdirs)
+    workflow.execute_entity_task(tasks.define_glacier_region, gdirs, source=source)
     workflow.execute_entity_task(tasks.simple_glacier_masks, gdirs,
                                  write_hypsometry=True)
     compile_glacier_statistics(gdirs,
